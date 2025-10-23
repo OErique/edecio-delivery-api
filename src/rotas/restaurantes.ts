@@ -30,7 +30,7 @@ const esquema = z.object({ nome: z.string().min(2), imagem_url: z.string().optio
 rota.post("/", verificarToken, exigirPapel("ADMIN"), async (req, res) => {
   const parsed = esquema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json(parsed.error.flatten());
-  res.json(await prisma.restaurante.create({ data: parsed.data }));
+  res.json(await prisma.restaurante.create({ data: parsed.data as any }));
 });
 
 rota.put("/:id", verificarToken, exigirPapel("ADMIN"), async (req, res) => {
